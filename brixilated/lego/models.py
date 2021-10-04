@@ -3,18 +3,19 @@ from django.utils.translation import gettext_lazy as _
 
 
 class LegoSet(models.Model):
-    name = models.CharField(unique=True, max_length=32)
-    description = models.TextField(max_length=256, blank=True)
+    name = models.CharField(unique=True, max_length=32, help='Name of Lego Set')
+    description = models.TextField(max_length=256, blank=True, help='Lego Set description')
+    is_complete_set = models.BooleanField(help_text='Data-structure is a Complete Lego Set')
 
     def __str__(self) -> str:
-        return f'Name: {self.name}, Description: {self.description}'
+        return f'Name: {self.name}, Completed Set: {self.is_complete_set}, Description: {self.description}'
 
 
 class LegoPieces(models.Model):
     lego_set = models.ForeignKey('LegoSet', on_delete=models.CASCADE, related_name='LegoPieces')
     lego_piece = models.ForeignKey('LegoPiece', on_delete=models.CASCADE, related_name='LegoPiece')
-    hex_color = models.PositiveIntegerField()
-    quantity = models.PositiveSmallIntegerField()
+    hex_color = models.PositiveIntegerField(help_text='Hex color code of Lego pieces')
+    quantity = models.PositiveSmallIntegerField(help_text='Number of Lego pieces')
 
     def __str__(self) -> str:
         return f'Lego Set: {self.lego_set.name}, Lego Piece: {self.lego_piece.part_number}, Quantity: {self.quantity}, Color: {self.hex_color:#08x}'
@@ -39,10 +40,11 @@ class LegoPiece(models.Model):
         OTHER = 'OT', _('Other')
         RETIRED = 'RE', _('Retired')
 
-    part_number = models.PositiveSmallIntegerField()
-    name = models.CharField(unique=True, max_length=16)
-    category = models.CharField(max_length=2, choices=LegoPieceCategory.choices, default=LegoPieceCategory.OTHER)
-    description = models.TextField(max_length=256, blank=True)
+    part_number = models.PositiveSmallIntegerField(help_text='Lego piece Part Number')
+    name = models.CharField(unique=True, max_length=16, help_text='Lego piece name')
+    category = models.CharField(max_length=2, choices=LegoPieceCategory.choices,
+                                default=LegoPieceCategory.OTHER, help_text='Lego piece category')
+    description = models.TextField(max_length=256, blank=True, help_text='Lego piece Description')
 
     def __str__(self) -> str:
         return f'Piece: {self.name}, Number: {self.part_number}'
