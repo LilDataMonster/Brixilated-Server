@@ -1,3 +1,6 @@
 from django.contrib import admin
+from lego.models import LegoSet, LegoPiece
 
-# Register your models here.
+
+admin.site.register(LegoSet)
+admin.site.register(LegoPiece)
