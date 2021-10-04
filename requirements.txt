@@ -2,4 +2,5 @@ Django>=3.2.7
 django-filter>=21.1
 djangorestframework>=3.12.4
 Markdown>=3.3.4
+psycopg2-binary>=2.8
 graphene-django>=2.15.0

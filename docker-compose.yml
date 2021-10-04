@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  db:
+    image: postgres
+    volumes:
+      - ./data/db:/var/lib/postresql/data
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+
+  brixilated:
+    build: .
+    command: echo hello
+    volumes:
+      - ./brixilated:/root/
+    ports:
+      - 8000:8000
+    depends_on:
+      - db

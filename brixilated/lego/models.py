@@ -3,9 +3,9 @@ from django.utils.translation import gettext_lazy as _
 
 
 class LegoSet(models.Model):
-    name = models.CharField(unique=True, max_length=32, help='Name of Lego Set')
-    description = models.TextField(max_length=256, blank=True, help='Lego Set description')
-    is_complete_set = models.BooleanField(help_text='Data-structure is a Complete Lego Set')
+    name = models.CharField(unique=True, max_length=32, help_text='Name of Lego Set')
+    description = models.TextField(max_length=256, blank=True, help_text='Lego Set description')
+    is_complete_set = models.BooleanField(default=False, help_text='Data-structure is a Complete Lego Set')
 
     def __str__(self) -> str:
         return f'Name: {self.name}, Completed Set: {self.is_complete_set}, Description: {self.description}'
