@@ -8,7 +8,6 @@ class Command(BaseCommand):
     help = 'Loads the default Lego Sets into the database'
 
     def add_arguments(self, parser):
-        # parser.add_argument('poll_ids', nargs='+', type=int)
         default_path = os.path.join(settings.BASE_DIR, 'lego',
                                     'management', 'commands', 'default_lego_set.csv')
         parser.add_argument('--lego_set_file', nargs=1, default=default_path)
