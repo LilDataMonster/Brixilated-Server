@@ -40,8 +40,8 @@ class LegoPiece(models.Model):
         OTHER = 'OT', _('Other')
         RETIRED = 'RE', _('Retired')
 
-    part_number = models.PositiveSmallIntegerField(help_text='Lego piece Part Number')
-    name = models.CharField(unique=True, max_length=16, help_text='Lego piece name')
+    part_number = models.PositiveSmallIntegerField(unique=True, help_text='Lego piece Part Number')
+    name = models.CharField(unique=True, max_length=64, help_text='Lego piece name')
     category = models.CharField(max_length=2, choices=LegoPieceCategory.choices,
                                 default=LegoPieceCategory.OTHER, help_text='Lego piece category')
     description = models.TextField(max_length=256, blank=True, help_text='Lego piece Description')
