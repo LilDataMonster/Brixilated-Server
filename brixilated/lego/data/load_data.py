@@ -63,6 +63,7 @@ def load_lego_set_csv(csv_file: str, log: OutputWrapper = None) -> bool:
         log.write('=============================================')
         log.write(f'Loaded Lego Set into database:')
         log.write(f'Lego Set Name: {lego_set.name}')
+        log.write(f'Lego Set Description: {lego_set.description}')
         log.write(f'Total Number of Pieces: {num_parts}')
         log.write(f'Unique Number of Pieces: {res_df.shape[0]}')
         log.write('=============================================')
