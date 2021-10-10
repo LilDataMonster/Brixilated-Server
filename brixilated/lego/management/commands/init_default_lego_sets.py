@@ -12,7 +12,7 @@ class Command(BaseCommand):
         parser.add_argument('--lego_set_dir', nargs=1, default=default_path)
 
     def handle(self, *args, **options):
-        path = os.listdir(options['lego_set_dir'])
+        path = options['lego_set_dir']
         files = os.listdir(path)
         for filename in files:
             try:

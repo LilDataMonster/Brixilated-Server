@@ -10,6 +10,10 @@ class LegoSet(models.Model):
     def __str__(self) -> str:
         return f'Name: {self.name}, Completed Set: {self.is_complete_set}, Description: {self.description}'
 
+    class Meta:
+        verbose_name = 'Lego Set'
+        verbose_name_plural = 'Lego Sets'
+
 
 class LegoPieces(models.Model):
     lego_set = models.ForeignKey('LegoSet', on_delete=models.CASCADE, related_name='LegoPieces')
@@ -19,6 +23,10 @@ class LegoPieces(models.Model):
 
     def __str__(self) -> str:
         return f'Lego Set: {self.lego_set.name}, Lego Piece: {self.lego_piece.part_number}, Quantity: {self.quantity}, Color: {self.hex_color:#08x}'
+
+    class Meta:
+        verbose_name = 'Set Piece'
+        verbose_name_plural = 'Set Pieces'
 
 
 class LegoPiece(models.Model):
@@ -41,10 +49,14 @@ class LegoPiece(models.Model):
         RETIRED = 'RE', _('Retired')
 
     part_number = models.PositiveSmallIntegerField(unique=True, help_text='Lego piece Part Number')
-    name = models.CharField(unique=True, max_length=64, help_text='Lego piece name')
+    name = models.CharField(blank=True, max_length=64, help_text='Lego piece name')
     category = models.CharField(max_length=2, choices=LegoPieceCategory.choices,
                                 default=LegoPieceCategory.OTHER, help_text='Lego piece category')
     description = models.TextField(max_length=256, blank=True, help_text='Lego piece Description')
 
     def __str__(self) -> str:
         return f'Piece: {self.name}, Number: {self.part_number}'
+
+    class Meta:
+        verbose_name = 'Piece'
+        verbose_name_plural = 'Pieces'
