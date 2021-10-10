@@ -35,8 +35,6 @@ def populate_set(row: pd.Series, lego_set: LegoSet, log: OutputWrapper = None) -
 
 
 def load_lego_set_csv(csv_file: str, log: OutputWrapper = None) -> bool:
-    # populate_set = lambda row: LegoSet.objects.create(**row)
-
     # create set
     df_set = pd.read_csv(csv_file,
                          header=None,
