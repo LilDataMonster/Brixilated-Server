@@ -1,6 +1,5 @@
 import os
-import pandas as pd
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand
 from django.conf import settings
 from lego.data.load_data import load_lego_pieces_csv
 
@@ -20,10 +19,13 @@ class Command(BaseCommand):
                 # only process csv files
                 if not filename.endswith('.csv'):
                     continue
+
+                # get file path
                 file_path = os.path.join(path, filename)
+
+                # process file
                 self.stdout.write(f"Processing File: {file_path}", ending='... ')
                 load_lego_pieces_csv(file_path, self.stdout)
             except Exception as e:
-                # raise CommandError(f'Unable to process file: {e}')
                 self.stdout.flush()
                 self.stderr.write(f'Unable to process file: {e}')
