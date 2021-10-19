@@ -1,7 +1,10 @@
+import numpy as np
 import pandas as pd
 from functools import partial
-from lego.models import LegoPiece, LegoPieces, LegoSet
+from lego.models import LegoPiece, LegoPieces, LegoSet, LegoColor
 from django.core.management.base import OutputWrapper
+
+from .colors import fetch_colors
 
 
 def load_lego_pieces_csv(csv_file: str, log: OutputWrapper = None) -> bool:
@@ -66,6 +69,63 @@ def load_lego_set_csv(csv_file: str, log: OutputWrapper = None) -> bool:
         log.write(f'Lego Set Description: {lego_set.description}')
         log.write(f'Total Number of Pieces: {num_parts}')
         log.write(f'Unique Number of Pieces: {res_df.shape[0]}')
+        log.write('=============================================')
+
+    return True
+
+
+def load_lego_colors_csv(csv_file: str, fetch_data: bool = False, log: OutputWrapper = None) -> bool:
+
+    if csv_file is None:
+        fetch_data = True
+
+    # get colors
+    df_colors = fetch_colors(log) if fetch_data else pd.read_csv(csv_file)
+
+    # rename headers
+    df_colors.rename(columns={
+        "Material": "material",
+        "LEGO ID": "lego_id",
+        "LEGO Name (*=unconfirmed)": "lego_name",
+        "BL ID": "bl_id",
+        "BL Name": "bl_name",
+        "BO Name": "bo_name",
+        "LDraw ID": "ldraw_id",
+        "LDraw Name": "ldraw_name",
+        "Peeron Name": "peeron_name",
+        "Other": "other",
+        "Years Active Start": "year_start",
+        "Years Active End": "year_end",
+        "Notes": "notes",
+        "Hex": "hex_code",
+        "C": "cyan",
+        "M": "magenta",
+        "Y": "yellow",
+        "K": "black",
+        "Pantone": "pantone"
+    }, inplace=True)
+
+    headers = ['material', 'lego_id', 'lego_name', 'bl_id', 'bl_name', 'bo_name',
+               'ldraw_id', 'ldraw_name', 'peeron_name', 'other', 'year_start', 'year_end',
+               'notes', 'hex_code', 'cyan', 'magenta', 'yellow', 'black', 'pantone']
+    df_colors = df_colors[headers]
+
+    # replace NaN with None
+    df_colors = df_colors.fillna(np.nan).replace([np.nan, ''], [None, None])
+    df_colors['year_end'] = df_colors['year_end'].replace(['Present', '?'], [None, None])
+    df_colors['year_start'] = df_colors['year_start'].replace(['Present', '?'], [None, None])
+
+    # translate material to code
+    df_colors['material'] = df_colors['material'].apply(lambda x: LegoColor.LegoColorCategory[x.upper()])
+
+    # create colors
+    populate_colors = lambda row: LegoColor.objects.create(**row)
+    # populate_colors = lambda row: print(row)
+    lego_colors = df_colors.apply(populate_colors, 1)
+    if log:
+        log.write('\n=============================================')
+        log.write(f'Loaded Lego Colors into database:')
+        log.write(f'Loaded lego Colors: {lego_colors.shape[0]}')
         log.write('=============================================')
 
     return True
