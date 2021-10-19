@@ -120,7 +120,6 @@ def load_lego_colors_csv(csv_file: str, fetch_data: bool = False, log: OutputWra
 
     # create colors
     populate_colors = lambda row: LegoColor.objects.create(**row)
-    # populate_colors = lambda row: print(row)
     lego_colors = df_colors.apply(populate_colors, 1)
     if log:
         log.write('\n=============================================')
