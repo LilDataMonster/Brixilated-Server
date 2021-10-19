@@ -1,6 +1,6 @@
 import graphene
 from graphene_django import DjangoObjectType
-from lego.models import LegoSet, LegoPiece
+from lego.models import LegoSet, LegoPiece, LegoColor
 
 
 class LegoSetType(DjangoObjectType):
@@ -15,9 +15,16 @@ class LegoPieceType(DjangoObjectType):
         fields = '__all__'
 
 
+class LegoColorType(DjangoObjectType):
+    class Meta:
+        model = LegoColor
+        fields = '__all__'
+
+
 class Query(graphene.ObjectType):
     lego_sets = graphene.List(LegoSetType)
     lego_piece = graphene.List(LegoPieceType)
+    lego_color = graphene.List(LegoColorType)
 
     @staticmethod
     def resolve_lego_sets(self, info):
@@ -26,6 +33,10 @@ class Query(graphene.ObjectType):
     @staticmethod
     def resolve_lego_piece(self, info):
         return LegoPiece.objects.all()
+
+    @staticmethod
+    def resolve_lego_color(self, info):
+        return LegoColor.objects.all()
 
     # category_by_name = graphene.Field(CategoryType, name=graphene.String(required=True))
     #
