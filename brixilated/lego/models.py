@@ -19,7 +19,7 @@ class LegoPieces(models.Model):
     lego_set = models.ForeignKey('LegoSet', on_delete=models.CASCADE, related_name='LegoPieces')
     lego_piece = models.ForeignKey('LegoPiece', on_delete=models.CASCADE, related_name='LegoPiece')
     lego_color = models.ForeignKey('LegoColor', on_delete=models.CASCADE, related_name='LegoColor')
-    element_id = models.PositiveIntegerField(unique=True, help_text='Lego Piece Element ID')
+    element_id = models.PositiveIntegerField(null=True, unique=True, help_text='Lego Piece Element ID')
     quantity = models.PositiveSmallIntegerField(help_text='Number of Lego pieces')
 
     def __str__(self) -> str:
@@ -50,8 +50,8 @@ class LegoPiece(models.Model):
         OTHER = 'OT', _('Other')
         RETIRED = 'RE', _('Retired')
 
-    ldraw_id = models.PositiveSmallIntegerField(unique=True, help_text='Lego piece LDraw ID')
-    bl_item_no = models.PositiveSmallIntegerField(unique=True, help_text='Lego piece BL Item Number')
+    ldraw_id = models.CharField(max_length=64, null=True, unique=True, help_text='Lego piece LDraw ID')
+    bl_item_no = models.CharField(max_length=64, null=True, unique=True, help_text='Lego piece BL Item Number')
     part_name = models.CharField(blank=True, max_length=64, help_text='Lego piece name')
     category = models.CharField(max_length=2, choices=LegoPieceCategory.choices,
                                 default=LegoPieceCategory.OTHER, help_text='Lego piece category')

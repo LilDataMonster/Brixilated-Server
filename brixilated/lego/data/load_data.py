@@ -1,3 +1,4 @@
+import os
 import numpy as np
 import pandas as pd
 from functools import partial
@@ -39,27 +40,18 @@ def populate_set(row: pd.Series, lego_set: LegoSet, log: OutputWrapper = None) -
 
 def load_lego_set_csv(csv_file: str, log: OutputWrapper = None) -> bool:
     # create set
-    df_set = pd.read_csv(csv_file,
-                         header=None,
-                         nrows=1,
-                         names=['name', 'is_complete_set', 'description'])
+    lego_set_name = os.path.splitext(os.path.basename(csv_file))
+    lego_set = LegoSet.objects.create(lego_set_name=lego_set_name,
+                                      is_complete_set=True)
 
-    # replace nan in description with blank string
-    df_set['description'] = df_set['description'].fillna('')
-
-    # lego_set = df_set.apply(populate_set, 1)[0]
-    lego_set = LegoSet.objects.create(**df_set.iloc[0])
     if log:
         log.write(f'\nLego set created: {lego_set}')
 
-    # create pieces
-    df_pieces = pd.read_csv(csv_file,
-                            header=None,
-                            skiprows=1,
-                            names=['part_number', 'quantity', 'hex_color'])
+    # populate set
+    df_set = pd.read_csv(csv_file, skipfooter=3)
 
     populate_lego_set = partial(populate_set, lego_set=lego_set, log=log)
-    res_df = df_pieces.apply(populate_lego_set, 1)
+    res_df = df_set.apply(populate_lego_set, 1)
 
     if log:
         num_parts = res_df.apply(lambda x: x.quantity).sum()
