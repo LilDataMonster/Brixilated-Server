@@ -43,7 +43,8 @@ def populate_set(row: pd.Series, lego_set: LegoSet, log: OutputWrapper = None) -
     df_piece = row[piece_headers]
     piece, created = LegoPiece.objects.get_or_create(custom_piece=custom_piece, **df_piece)
     if created and log:
-        log.write(f'Lego Piece: {row["part_name"]} with Part Number: {row["element_id"]} and LDraw ID: {row["ldraw_id"]} not found in database... New Entry Created.')
+        log.write(f'Lego Piece: {row["part_name"]} with Part Number: {row["element_id"]} '
+                  f'and LDraw ID: {row["ldraw_id"]} not found in database... New Entry Created.')
 
     pieces = LegoPieces.objects.create(lego_set=lego_set,
                                        lego_piece=piece,
