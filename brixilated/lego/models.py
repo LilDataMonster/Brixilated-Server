@@ -18,7 +18,8 @@ class LegoSet(models.Model):
 class LegoPieces(models.Model):
     lego_set = models.ForeignKey('LegoSet', on_delete=models.CASCADE, related_name='LegoPieces')
     lego_piece = models.ForeignKey('LegoPiece', on_delete=models.CASCADE, related_name='LegoPiece')
-    lego_color = models.ForeignKey('LegoColor', on_delete=models.CASCADE, related_name='LegoColor')
+    # nullable from custom pieces
+    lego_color = models.ForeignKey('LegoColor', null=True, on_delete=models.CASCADE, related_name='LegoColor')
     element_id = models.PositiveIntegerField(null=True, unique=True, help_text='Lego Piece Element ID')
     quantity = models.PositiveSmallIntegerField(help_text='Number of Lego pieces')
 
@@ -106,7 +107,7 @@ class LegoColor(models.Model):
     pantone = models.CharField(blank=True, null=True, max_length=64, help_text='Lego color pantone')
 
     def __str__(self) -> str:
-        return f'Color ID: {self.lego_id}, Name: {self.name}'
+        return f'Color ID: {self.ldraw_color_id}, Name: {self.name}'
 
     class Meta:
         verbose_name = 'Color'

@@ -1,0 +1,64 @@
+BLItemNo,ElementId,LdrawId,PartName,BLColorId,LDrawColorId,ColorName,ColorCategory,Qty,Weight
+11211,6019155,11211,"Brick, Modified 1 x 2 with Studs on 1 Side",5,4,Red,Solid Colors,2,0.86
+11476,6313116,11476,"Plate, Modified 1 x 2 with Clip on Side (Horizontal Grip)",11,0,Black,Solid Colors,2,0.46
+11477,6047276,11477,"Slope, Curved 2 x 1",11,0,Black,Solid Colors,2,0.31
+15068,6053077,15068,"Slope, Curved 2 x 2",11,0,Black,Solid Colors,6,0.57
+15573,6092585,15573,"Plate, Modified 1 x 2 with 1 Stud with Groove and Bottom Stud Holder (Jumper)",11,0,Black,Solid Colors,6,0.3
+22885,6123809,22885,"Brick, Modified 1 x 2 x 1 2/3 with Studs on 1 Side",86,71,Light Bluish Gray,Solid Colors,4,1.25
+24201,6251252,24201,"Slope, Curved 2 x 1 Inverted",2,19,Tan,Solid Colors,2,0.36
+24246,6258973,24246,"Tile, Round 1 x 1 Half Circle Extended (Stadium)",5,4,Red,Solid Colors,1,0
+2431,4211194,2431,Tile 1 x 4,88,70,Reddish Brown,Solid Colors,2,0.54
+2431,243126,2431,Tile 1 x 4,11,0,Black,Solid Colors,2,0.54
+25269,6172366,25269,"Tile, Round 1 x 1 Quarter",1,15,White,Solid Colors,4,0.1
+29119,6181713,29119,Wedge 2 x 1 with Stud Notch Right,11,0,Black,Solid Colors,1,0.23
+29120,6181720,29120,Wedge 2 x 1 with Stud Notch Left,11,0,Black,Solid Colors,1,0.23
+3003,4653960,3003,Brick 2 x 2,89,85,Dark Purple,Solid Colors,2,1.35
+3005,4211242,3005,Brick 1 x 1,88,70,Reddish Brown,Solid Colors,2,0.44
+3010,301026,3010,Brick 1 x 4,11,0,Black,Solid Colors,1,1.64
+3020,302026,3020,Plate 2 x 4,11,0,Black,Solid Colors,2,1.2
+3021,302101,3021,Plate 2 x 3,1,15,White,Solid Colors,2,0.93
+3021,302123,3021,Plate 2 x 3,7,1,Blue,Solid Colors,1,0.93
+3022,4216695,3022,Plate 2 x 2,88,70,Reddish Brown,Solid Colors,6,0.64
+3023,302323,3023,Plate 1 x 2,7,1,Blue,Solid Colors,2,0.36
+3023,4211150,3023,Plate 1 x 2,88,70,Reddish Brown,Solid Colors,2,0.36
+3023,4113917,3023,Plate 1 x 2,2,19,Tan,Solid Colors,1,0.36
+3023,302326,3023,Plate 1 x 2,11,0,Black,Solid Colors,10,0.36
+3024,6252045,3024,Plate 1 x 1,19,46,Trans-Yellow,Transparent Colors,4,0.2
+3024,4159553,3024,Plate 1 x 1,2,19,Tan,Solid Colors,2,0.2
+3024,4221744,3024,Plate 1 x 1,88,70,Reddish Brown,Solid Colors,4,0.2
+3069b,4211151,3069b,Tile 1 x 2 with Groove,88,70,Reddish Brown,Solid Colors,2,0.26
+3069b,306901,3069b,Tile 1 x 2 with Groove,1,15,White,Solid Colors,1,0.26
+3070b,307021,3070b,Tile 1 x 1 with Groove (3070),5,4,Red,Solid Colors,1,0.16
+3070b,4211288,3070b,Tile 1 x 1 with Groove (3070),88,70,Reddish Brown,Solid Colors,2,0.16
+3070b,307026,3070b,Tile 1 x 1 with Groove (3070),11,0,Black,Solid Colors,2,0.16
+3070b,4125253,3070b,Tile 1 x 1 with Groove (3070),2,19,Tan,Solid Colors,2,0.16
+3176,317626,3176,"Plate, Modified 3 x 2 with Hole",11,0,Black,Solid Colors,3,0.8
+33909,6196221,33909,"Tile, Modified 2 x 2 with Studs on Edge",88,70,Reddish Brown,Solid Colors,2,0.57
+35480,6248944,35480,"Plate, Round 1 x 2 with Two Open Studs",88,70,Reddish Brown,Solid Colors,1,0.26
+35480,6212758,35480,"Plate, Round 1 x 2 with Two Open Studs",2,19,Tan,Solid Colors,1,0.26
+3622,4211220,3622,Brick 1 x 3,88,70,Reddish Brown,Solid Colors,1,1.24
+36840,6238874,36840,Bracket 1 x 1 - 1 x 1 Inverted,88,70,Reddish Brown,Solid Colors,2,0.29
+3700,4205107,3700,"Technic, Brick 1 x 2 with Hole",2,19,Tan,Solid Colors,1,0.82
+3710,4179828,3710,Plate 1 x 4,42,73,Medium Blue,Solid Colors,4,0.71
+3710,4113233,3710,Plate 1 x 4,2,19,Tan,Solid Colors,1,0.71
+3710,371026,3710,Plate 1 x 4,11,0,Black,Solid Colors,3,0.71
+3710,4211190,3710,Plate 1 x 4,88,70,Reddish Brown,Solid Colors,4,0.71
+3958,395826,3958,Plate 6 x 6,11,0,Black,Solid Colors,1,4.71
+4150,415026,4150,"Tile, Round 2 x 2",11,0,Black,Solid Colors,2,0.33
+4274,4143005,4274,"Technic, Pin 1/2",7,1,Blue,Solid Colors,1,0.095
+47458,4218581,47458,"Slope, Curved 1 x 2 x 2/3 Wing End",11,0,Black,Solid Colors,2,0.44
+47905,6253167,47905,"Brick, Modified 1 x 1 with Studs on 2 Sides, Opposite",88,70,Reddish Brown,Solid Colors,2,0.45
+4073,4161734,4073,"Plate, Round 1 x 1",2,19,Tan,Solid Colors,2,0.12
+85984,4548180,85984,Slope 30 1 x 2 x 2/3,11,0,Black,Solid Colors,6,0.34
+87079,4560182,87079,Tile 2 x 4,11,0,Black,Solid Colors,1,0.9
+87087,6062574,87087,"Brick, Modified 1 x 1 with Stud on 1 Side",88,70,Reddish Brown,Solid Colors,2,0.45
+87087,4579260,87087,"Brick, Modified 1 x 1 with Stud on 1 Side",2,19,Tan,Solid Colors,4,0.45
+87580,4565323,87580,"Plate, Modified 2 x 2 with Groove and 1 Stud in Center (Jumper)",11,0,Black,Solid Colors,2,0.5
+93273,4613153,93273,"Slope, Curved 4 x 1 Double",11,0,Black,Solid Colors,3,0.6
+98138,6284573,98138,"Tile, Round 1 x 1",2,19,Tan,Solid Colors,1,0.11
+99206,6132769,99206,"Plate, Modified 2 x 2 x 2/3 with 2 Studs on Side",2,19,Tan,Solid Colors,2,0.87
+,,m898C3B67_202136_062819.dat,Slope Brick 31 1 x 2 x 2/3 - RU*,,0,Black,Solid Colors,1,
+,,m898C3B67_202136_062848.dat,Slope Brick 31 1 x 2 x 2/3 DY*,,0,Black,Solid Colors,1,
+,,,,,,,,,
+Total qty,Total Weight,,,,,,,,
+140,73.76501 +a,,,,,,,,

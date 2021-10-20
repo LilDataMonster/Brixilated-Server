@@ -27,36 +27,62 @@ def load_lego_pieces_csv(csv_file: str, log: OutputWrapper = None) -> bool:
 
 
 def populate_set(row: pd.Series, lego_set: LegoSet, log: OutputWrapper = None) -> LegoPieces:
-    piece, created = LegoPiece.objects.get_or_create()
+    custom_piece = row['element_id'] is None
+    color = None
+    if not custom_piece:
+        # get or create color
+        color_headers = ['bl_color_id', 'bl_color_name', 'ldraw_color_id', 'material']
+        df_colors = row[color_headers]
+        color, created = LegoColor.objects.get_or_create(**df_colors)
+        if created and log:
+            log.write(f'Lego Color: {row["bl_color_name"]}, LDrawID: {row["ldraw_color_id"]}'
+                      f' not found in database... New Entry Created.')
+
+    # get or create piece
+    piece_headers = ['part_name', 'weight', 'ldraw_id', 'bl_item_no']
+    df_piece = row[piece_headers]
+    piece, created = LegoPiece.objects.get_or_create(custom_piece=custom_piece, **df_piece)
     if created and log:
-        log.write(f'Lego Piece with Part Number: {row["part_number"]} not found in database... New Entry Created.')
+        log.write(f'Lego Piece: {row["part_name"]} with Part Number: {row["element_id"]} and LDraw ID: {row["ldraw_id"]} not found in database... New Entry Created.')
 
     pieces = LegoPieces.objects.create(lego_set=lego_set,
                                        lego_piece=piece,
-                                       hex_color=int(row["hex_color"], 0),
-                                       quantity=row["quantity"])
+                                       lego_color=color,
+                                       element_id=row['element_id'],
+                                       quantity=row['quantity'])
     return pieces
 
 
 def load_lego_set_csv(csv_file: str, log: OutputWrapper = None) -> bool:
     # create set
     lego_set_name = os.path.splitext(os.path.basename(csv_file))[0].replace('_Partlist', '')
-    lego_set = LegoSet.objects.create(lego_set_name=lego_set_name,
+    lego_set = LegoSet.objects.create(name=lego_set_name,
                                       is_complete_set=True)
 
     if log:
         log.write(f'\nLego set created: {lego_set}')
 
     # populate set
-    df_set = pd.read_csv(csv_file, skipfooter=3)
+    df_set = pd.read_csv(csv_file, engine='python', skipfooter=3)
     df_set.rename(columns={
         "BLItemNo": "bl_item_no",
         "ElementId": "element_id",
         "LdrawId": "ldraw_id",
         "PartName": "part_name",
         "BLColorId": "bl_color_id",
-        "LDrawColorId": "ldraw_color_id"
+        "LDrawColorId": "ldraw_color_id",
+        "ColorName": "bl_color_name",
+        "ColorCategory": "material",
+        "Qty": "quantity",
+        "Weight": "weight"
     }, inplace=True)
+
+    # translate material to code
+    df_set['material'] = df_set['material'].apply(
+        lambda x: LegoColor.LegoColorCategory[x.replace(' Colors', '').upper()])
+
+    # replace NaN with None
+    df_set = df_set.fillna(np.nan).replace([np.nan, ''], [None, None])
 
     populate_lego_set = partial(populate_set, lego_set=lego_set, log=log)
     res_df = df_set.apply(populate_lego_set, 1)
