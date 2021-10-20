@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'graphene_django',
     'django_filters',
+    'corsheaders',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -46,6 +47,8 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
+
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -141,3 +144,5 @@ REST_FRAMEWORK = {
 GRAPHENE = {
     "SCHEMA": "cookbook.schema.schema"
 }
+
+CORS_ALLOW_ALL_ORIGINS = True
