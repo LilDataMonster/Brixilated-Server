@@ -1,5 +1,7 @@
 import graphene
+from graphene import relay
 from graphene_django import DjangoObjectType
+from graphene_django.filter import DjangoFilterConnectionField
 from lego.models import LegoSet, LegoPiece, LegoPieces, LegoColor
 
 
@@ -7,12 +9,16 @@ class LegoSetType(DjangoObjectType):
     class Meta:
         model = LegoSet
         fields = '__all__'
+        filter_fields = '__all__'
+        interfaces = (relay.Node,)
 
 
 class LegoPiecesType(DjangoObjectType):
     class Meta:
         model = LegoPieces
         fields = '__all__'
+        filter_fields = '__all__'
+        interfaces = (relay.Node,)
 
 
 class LegoPieceType(DjangoObjectType):
@@ -24,6 +30,8 @@ class LegoPieceType(DjangoObjectType):
     class Meta:
         model = LegoPiece
         fields = '__all__'
+        filter_fields = '__all__'
+        interfaces = (relay.Node,)
 
 
 class LegoColorType(DjangoObjectType):
@@ -35,12 +43,21 @@ class LegoColorType(DjangoObjectType):
     class Meta:
         model = LegoColor
         fields = '__all__'
+        filter_fields = '__all__'
+        interfaces = (relay.Node,)
 
 
 class Query(graphene.ObjectType):
+    # custom lego query
     lego_sets = graphene.List(LegoSetType)
     lego_piece = graphene.List(LegoPieceType)
     lego_color = graphene.List(LegoColorType)
+
+    # filterable fields
+    all_lego_piece = DjangoFilterConnectionField(LegoPieceType)
+    all_lego_pieces = DjangoFilterConnectionField(LegoPiecesType)
+    all_lego_sets = DjangoFilterConnectionField(LegoSetType)
+    all_lego_color = DjangoFilterConnectionField(LegoColorType)
 
     @staticmethod
     def resolve_lego_sets(self, info):
