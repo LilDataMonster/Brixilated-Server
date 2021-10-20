@@ -27,7 +27,7 @@ def load_lego_pieces_csv(csv_file: str, log: OutputWrapper = None) -> bool:
 
 
 def populate_set(row: pd.Series, lego_set: LegoSet, log: OutputWrapper = None) -> LegoPieces:
-    piece, created = LegoPiece.objects.get_or_create(part_number=row['part_number'])
+    piece, created = LegoPiece.objects.get_or_create()
     if created and log:
         log.write(f'Lego Piece with Part Number: {row["part_number"]} not found in database... New Entry Created.')
 
@@ -40,7 +40,7 @@ def populate_set(row: pd.Series, lego_set: LegoSet, log: OutputWrapper = None) -
 
 def load_lego_set_csv(csv_file: str, log: OutputWrapper = None) -> bool:
     # create set
-    lego_set_name = os.path.splitext(os.path.basename(csv_file))
+    lego_set_name = os.path.splitext(os.path.basename(csv_file))[0].replace('_Partlist', '')
     lego_set = LegoSet.objects.create(lego_set_name=lego_set_name,
                                       is_complete_set=True)
 
@@ -49,6 +49,14 @@ def load_lego_set_csv(csv_file: str, log: OutputWrapper = None) -> bool:
 
     # populate set
     df_set = pd.read_csv(csv_file, skipfooter=3)
+    df_set.rename(columns={
+        "BLItemNo": "bl_item_no",
+        "ElementId": "element_id",
+        "LdrawId": "ldraw_id",
+        "PartName": "part_name",
+        "BLColorId": "bl_color_id",
+        "LDrawColorId": "ldraw_color_id"
+    }, inplace=True)
 
     populate_lego_set = partial(populate_set, lego_set=lego_set, log=log)
     res_df = df_set.apply(populate_lego_set, 1)
@@ -79,11 +87,11 @@ def load_lego_colors_csv(csv_file: str, fetch_data: bool = False, log: OutputWra
         "Material": "material",
         "LEGO ID": "lego_id",
         "LEGO Name (*=unconfirmed)": "name",
-        "BL ID": "bl_id",
-        "BL Name": "bl_name",
-        "BO Name": "bo_name",
-        "LDraw ID": "ldraw_id",
-        "LDraw Name": "ldraw_name",
+        "BL ID": "bl_color_id",
+        "BL Name": "bl_color_name",
+        "BO Name": "bo_color_name",
+        "LDraw ID": "ldraw_color_id",
+        "LDraw Name": "ldraw_color_name",
         "Peeron Name": "peeron_name",
         "Other": "other",
         "Years Active Start": "year_start",
@@ -97,8 +105,8 @@ def load_lego_colors_csv(csv_file: str, fetch_data: bool = False, log: OutputWra
         "Pantone": "pantone"
     }, inplace=True)
 
-    headers = ['material', 'lego_id', 'name', 'bl_id', 'bl_name', 'bo_name',
-               'ldraw_id', 'ldraw_name', 'peeron_name', 'other', 'year_start', 'year_end',
+    headers = ['material', 'lego_id', 'name', 'bl_color_id', 'bl_color_name', 'bo_color_name',
+               'ldraw_color_id', 'ldraw_color_name', 'peeron_name', 'other', 'year_start', 'year_end',
                'notes', 'hex_code', 'cyan', 'magenta', 'yellow', 'black', 'pantone']
     df_colors = df_colors[headers]
 
