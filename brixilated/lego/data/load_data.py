@@ -86,7 +86,7 @@ def load_lego_colors_csv(csv_file: str, fetch_data: bool = False, log: OutputWra
     df_colors.rename(columns={
         "Material": "material",
         "LEGO ID": "lego_id",
-        "LEGO Name (*=unconfirmed)": "lego_name",
+        "LEGO Name (*=unconfirmed)": "name",
         "BL ID": "bl_id",
         "BL Name": "bl_name",
         "BO Name": "bo_name",
@@ -105,7 +105,7 @@ def load_lego_colors_csv(csv_file: str, fetch_data: bool = False, log: OutputWra
         "Pantone": "pantone"
     }, inplace=True)
 
-    headers = ['material', 'lego_id', 'lego_name', 'bl_id', 'bl_name', 'bo_name',
+    headers = ['material', 'lego_id', 'name', 'bl_id', 'bl_name', 'bo_name',
                'ldraw_id', 'ldraw_name', 'peeron_name', 'other', 'year_start', 'year_end',
                'notes', 'hex_code', 'cyan', 'magenta', 'yellow', 'black', 'pantone']
     df_colors = df_colors[headers]

@@ -18,11 +18,13 @@ class LegoSet(models.Model):
 class LegoPieces(models.Model):
     lego_set = models.ForeignKey('LegoSet', on_delete=models.CASCADE, related_name='LegoPieces')
     lego_piece = models.ForeignKey('LegoPiece', on_delete=models.CASCADE, related_name='LegoPiece')
-    hex_color = models.PositiveIntegerField(help_text='Hex color code of Lego pieces')
+    lego_color = models.ForeignKey('LegoColor', on_delete=models.CASCADE, related_name='LegoColor')
+    element_id = models.PositiveIntegerField(unique=True, help_text='Lego Piece Element ID')
     quantity = models.PositiveSmallIntegerField(help_text='Number of Lego pieces')
 
     def __str__(self) -> str:
-        return f'Lego Set: {self.lego_set.name}, Lego Piece: {self.lego_piece.part_number}, Quantity: {self.quantity}, Color: {self.hex_color:#08x}'
+        return f'Lego Set: {self.lego_set.name}, Lego Piece: {self.lego_piece.ldraw_id}, ' \
+               f'Quantity: {self.quantity}, Color: {self.lego_color.name:#08x}'
 
     class Meta:
         verbose_name = 'Set Piece'
@@ -48,14 +50,17 @@ class LegoPiece(models.Model):
         OTHER = 'OT', _('Other')
         RETIRED = 'RE', _('Retired')
 
-    part_number = models.PositiveSmallIntegerField(unique=True, help_text='Lego piece Part Number')
-    name = models.CharField(blank=True, max_length=64, help_text='Lego piece name')
+    ldraw_id = models.PositiveSmallIntegerField(unique=True, help_text='Lego piece LDraw ID')
+    bl_item_no = models.PositiveSmallIntegerField(unique=True, help_text='Lego piece BL Item Number')
+    part_name = models.CharField(blank=True, max_length=64, help_text='Lego piece name')
     category = models.CharField(max_length=2, choices=LegoPieceCategory.choices,
                                 default=LegoPieceCategory.OTHER, help_text='Lego piece category')
     description = models.TextField(max_length=256, blank=True, help_text='Lego piece Description')
+    weight = models.PositiveSmallIntegerField(null=True, help_text='Lego piece weight')
+    custom_piece = models.BooleanField(default=False, help_text='Lego piece is a custom piece')
 
     def __str__(self) -> str:
-        return f'Piece: {self.name}, Number: {self.part_number}'
+        return f'Piece: {self.part_name}, LDraw Number: {self.ldraw_id}'
 
     class Meta:
         verbose_name = 'Piece'
@@ -79,9 +84,10 @@ class LegoColor(models.Model):
         MODULEX = 'MO', _('Modulex')
         OTHER = 'OT', _('Other')
 
-    material = models.CharField(max_length=2, choices=LegoColorCategory.choices, default=LegoColorCategory.OTHER, help_text='Lego color material')
+    material = models.CharField(max_length=2, choices=LegoColorCategory.choices,
+                                default=LegoColorCategory.OTHER, help_text='Lego color material')
     lego_id = models.PositiveSmallIntegerField(null=True, help_text='Lego color ID')
-    lego_name = models.CharField(null=True, blank=True, max_length=64, help_text='Lego color name')
+    name = models.CharField(null=True, blank=True, max_length=64, help_text='Lego color name')
     bl_id = models.PositiveSmallIntegerField(null=True, help_text='Lego color BL ID')
     bl_name = models.CharField(blank=True, null=True, max_length=64, help_text='Lego color BL name')
     bo_name = models.CharField(blank=True, null=True, max_length=64, help_text='Lego color BO name')
@@ -100,7 +106,7 @@ class LegoColor(models.Model):
     pantone = models.CharField(blank=True, null=True, max_length=64, help_text='Lego color pantone')
 
     def __str__(self) -> str:
-        return f'Color ID: {self.lego_id}, Name: {self.lego_name}'
+        return f'Color ID: {self.lego_id}, Name: {self.name}'
 
     class Meta:
         verbose_name = 'Color'
