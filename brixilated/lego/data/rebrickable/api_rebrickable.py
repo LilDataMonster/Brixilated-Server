@@ -50,7 +50,7 @@ class RebrickableAPI(object):
         return df.reset_index(drop=True)
 
     def get_colors(self, write_csv: bool = True):
-        url = f'https://rebrickable.com/api/v3/lego/colors/?key={API_KEY}'
+        url = f'https://rebrickable.com/api/v3/lego/colors/?page_size=500'
         df = self.fetch_data(url)
         if df and write_csv:
             df.to_csv(f'colors_{datetime.now().strftime("%Y-%m-%d")}.csv', index=False)
